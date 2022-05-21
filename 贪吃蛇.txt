@@ -1,0 +1,64 @@
+#include"头文件及函数声明.h"
+int main() {
+	int b[10]={0};
+	char ch;
+	int c=0;
+	srand((unsigned int)time(0));	//生成随机数种子
+	a[0] = '$';
+	a[1] = '%';
+	a[2] = '&';
+	int end = 1, result;
+	while (end) {
+		result = Menu();			 //显示主菜单，并根据用户选择菜单选项决定游戏的执行
+		switch (result)
+		{
+		case 1:					 //选择1表示，开始贪吃蛇游戏
+			InitMap();			 //初始化地图、蛇和食物
+			while (MoveSnake());//如果返回0，则蛇停止移动；返回1，继续移动
+			c = 1;
+			break;
+		case 2:					  //选择2表示，显示帮助信息
+			Help();
+			c = 0;
+			break;
+		case 3:					  //选择3表示，显示关于信息的
+			About();
+			c = 0;
+			break;
+		case 4:
+			Rank();
+			c = 0;
+			break;
+		case 0:					  //选择0表示，表示结束程序
+			end = 0;
+			c = 0;
+			break;
+		}
+		if (c == 1)
+		{
+			FILE* fp = fopen("排行榜历史前十.txt", "r");
+			for (int i = 0; i < 10; i++)
+			{
+				fscanf(fp, "%d", &b[i]);
+				fscanf(fp, "%c", &ch);
+			}
+			fclose(fp);
+			FILE* fp1 = fopen("排行榜历史前十.txt", "w");
+			for (int i = 0,j; i < 10; i++)
+			{
+				if (b[i] < snake.length - 3)
+				{
+					for (j = 9; j > i; j--)
+						b[j] = b[j - 1];
+					b[j] = snake.length - 3;
+					break;
+				}
+			}
+			for (int i = 0; i < 10; i++)
+				fprintf(fp1, "%d\n", b[i]);
+			fclose(fp1);
+		}
+		
+	}
+	return 0;
+}
